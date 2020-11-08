@@ -22,26 +22,13 @@ func main() {
 func execute(host string, port string) (err error) {
 	srv := server.NewServer(net.JoinHostPort(host, port))
 
-	srv.Register("/", func(conn net.Conn) {
-		body := "Welcome to our web-site"
-
-		_, err = conn.Write([]byte(fmt.Sprintf(
-			"HTTP/1.1 200 OK\r\n"+
-				"Contetnt-Length: "+strconv.Itoa(len(body))+"\r\n"+
-				"Contetnt-Type: text/html\r\n"+
-				"Connection: close\r\n") +
-			"\r\n" +
-			string(body),
-		))
-		if err != nil {
-			log.Print(err)
-		}
-	})
-
-	srv.Register("/about", func(conn net.Conn) {
+	srv.Register("/payments", func(req *server.Request) {
 		body := "About Golang Academy"
 
-		_, err = conn.Write([]byte(fmt.Sprintf(
+		id := req.QueryParams["id"]
+		log.Print(id)
+
+		_, err = req.Conn.Write([]byte(fmt.Sprintf(
 			"HTTP/1.1 200 OK\r\n" +
 				"Contetnt-Length: " + strconv.Itoa(len(body)) + "\r\n" +
 				"Contetnt-Type: text/html\r\n" +
@@ -49,6 +36,7 @@ func execute(host string, port string) (err error) {
 				"\r\n" +
 				string(body)),
 		))
+
 		if err != nil {
 			log.Print(err)
 		}

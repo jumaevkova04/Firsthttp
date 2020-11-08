@@ -5,12 +5,19 @@ import (
 	"io"
 	"log"
 	"net"
+	"net/url"
 	"strings"
 	"sync"
 )
 
+// Request ...
+type Request struct {
+	Conn        net.Conn
+	QueryParams url.Values
+}
+
 // HandleFunc ...
-type HandleFunc func(conn net.Conn)
+type HandleFunc func(conn *Request)
 
 // Server ...
 type Server struct {
@@ -54,7 +61,6 @@ func (s *Server) Start() error {
 		go s.handle(conn)
 
 	}
-
 }
 
 func (s *Server) handle(conn net.Conn) {
@@ -85,7 +91,24 @@ func (s *Server) handle(conn net.Conn) {
 
 	path := parts[1]
 
-	var handleFunc = func(conn net.Conn) {
+	log.Print(path)
+
+	decoded, err := url.PathUnescape(path)
+	if err != nil {
+		log.Print(err)
+		return
+	}
+	log.Print(decoded)
+
+	uri, err := url.ParseRequestURI(path)
+	if err != nil {
+		log.Print(err)
+		return
+	}
+	log.Print(uri.Path)
+	log.Print(uri.Query())
+
+	var handleFunc = func(req *Request) {
 		conn.Close()
 	}
 
@@ -94,5 +117,9 @@ func (s *Server) handle(conn net.Conn) {
 		// return
 	}
 
-	handleFunc(conn)
+	var req Request
+	req.Conn = conn
+	req.QueryParams = uri.Query()
+
+	handleFunc(&req)
 }

@@ -1,0 +1,39 @@
+###
+
+GET http://localhost:9999/привет/ HTTP/1.1
+
+###
+
+GET http://localhost:9999/привет/?q=какой-то текст HTTP/1.1
+
+###
+
+GET http://localhost:9999/привет/?q=первий&q=второй HTTP/1.1
+
+
+###
+
+GET http://localhost:9999/payments/1 HTTP/1.1
+Accept: application/jsons
+X-CustomHeader: custom header
+
+###
+
+Post http://localhost:9999/payments/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": 0,
+    "amount": 1000,
+    "recipient": "xxxxxx"
+}
+
+###
+
+GET http://localhost:9999/?id=1 HTTP/1.1
+Accept: application/jsons
+X-CustomHeader: custom header
+
+### 
+
+GET http://localhost:9999/payments HTTP/1.1
