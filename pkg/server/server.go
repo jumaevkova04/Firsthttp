@@ -65,11 +65,11 @@ func (s *Server) Start() error {
 
 func (s *Server) handle(conn net.Conn) {
 
-	// defer func() {
-	// 	if cerr := conn.Close(); cerr != nil {
-	// 		log.Print(cerr)
-	// 	}
-	// }()
+	defer func() {
+		if cerr := conn.Close(); cerr != nil {
+			log.Print(cerr)
+		}
+	}()
 
 	buf := make([]byte, 4096)
 
@@ -100,7 +100,7 @@ func (s *Server) handle(conn net.Conn) {
 	}
 	log.Print(decoded)
 
-	uri, err := url.ParseRequestURI(path)
+	uri, err := url.ParseRequestURI(decoded)
 	if err != nil {
 		log.Print(err)
 		return
