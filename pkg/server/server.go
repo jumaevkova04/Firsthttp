@@ -65,11 +65,11 @@ func (s *Server) Start() error {
 
 func (s *Server) handle(conn net.Conn) {
 
-	defer func() {
-		if cerr := conn.Close(); cerr != nil {
-			log.Print(cerr)
-		}
-	}()
+	// defer func() {
+	// 	if cerr := conn.Close(); cerr != nil {
+	// 		log.Print(cerr)
+	// 	}
+	// }()
 
 	buf := make([]byte, 4096)
 
