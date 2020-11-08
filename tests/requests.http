@@ -36,7 +36,11 @@
 
 # ### 
 
-GET http://localhost:9999/payments/?id=5 HTTP/1.1
+GET http://localhost:9999/?id=5 HTTP/1.1
 
 ###
 Get http://localhost:9999/api/payments?param=9879
+
+### 
+
+GET http://localhost:9999/?id=5 HTTP/1.1

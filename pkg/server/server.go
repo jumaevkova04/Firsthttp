@@ -112,9 +112,8 @@ func (s *Server) handle(conn net.Conn) {
 		conn.Close()
 	}
 
-	if handler, ok := s.handlers[path]; ok {
+	if handler, ok := s.handlers[uri.Path]; ok {
 		handleFunc = handler
-		// return
 	}
 
 	var req Request
