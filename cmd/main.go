@@ -30,7 +30,7 @@ func execute(host string, port string) (err error) {
 		// for _, i := range id {
 		// 	a = i
 		// }
-		log.Print(id)
+		log.Println(id)
 		// log.Print(a)
 
 		_, err = req.Conn.Write([]byte(fmt.Sprintf(

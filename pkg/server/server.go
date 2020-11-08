@@ -91,22 +91,22 @@ func (s *Server) handle(conn net.Conn) {
 
 	path := parts[1]
 
-	log.Print(path)
+	// log.Print(path)
 
 	decoded, err := url.PathUnescape(path)
 	if err != nil {
 		log.Print(err)
 		return
 	}
-	log.Print(decoded)
+	// log.Print(decoded)
 
 	uri, err := url.ParseRequestURI(decoded)
 	if err != nil {
 		log.Print(err)
 		return
 	}
-	log.Print(uri.Path)
-	log.Print(uri.Query())
+	// log.Print(uri.Path)
+	// log.Print(uri.Query())
 
 	var handleFunc = func(req *Request) {
 		conn.Close()
