@@ -23,7 +23,7 @@ func execute(host string, port string) (err error) {
 	srv := server.NewServer(net.JoinHostPort(host, port))
 
 	srv.Register("/payments", func(req *server.Request) {
-		body := "About Golang Academy"
+		body := "Payments"
 
 		id := req.QueryParams["id"]
 		log.Print(id)
