@@ -148,6 +148,7 @@ func (s *Server) handle(conn net.Conn) {
 	// req.PathParams = map[string]string{"id": p[2]}
 
 	body := string(data[headersLineEnd:])
+	body = strings.Trim(body, "\r\n")
 	req.Body = []byte(body)
 	log.Print("body: ", body)
 

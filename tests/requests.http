@@ -43,7 +43,7 @@ Get http://localhost:9999/api/payments?param=9879
 
 ### 
 
-GET http://localhost:9999/payments/18/?id=45 HTTP/1.1
+GET http://localhost:9999/payments/18 HTTP/1.1
 
 ### 
 
