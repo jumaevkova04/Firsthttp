@@ -108,7 +108,7 @@ func (s *Server) handle(conn net.Conn) {
 	}
 	// log.Print(decoded)
 
-	// p := strings.Split(decoded, "/")
+	p := strings.Split(decoded, "/")
 
 	uri, err := url.ParseRequestURI(decoded)
 	if err != nil {
@@ -130,10 +130,22 @@ func (s *Server) handle(conn net.Conn) {
 	req.Conn = conn
 	req.QueryParams = uri.Query()
 
-	p := strings.Split(path, "/")
-	req.Headers = map[string]string{"header": p[1]}
+	headersLineDelim := []byte{'\r', '\n', '\r', '\n'}
+	headersLineEnd := bytes.Index(data, headersLineDelim)
 
-	// req.PathParams = map[string]string{"id": p[2]}
+	headersLine := string(data[requestLineEnd:headersLineEnd])
+	headers := strings.Split(headersLine, "\r\n")[1:]
+	// headers = headers[1:]
+	header := map[string]string{}
+	for _, h := range headers {
+		line := strings.Split(h, ": ")
+		header[line[0]] = line[1]
+	}
+	req.Headers = header
+
+	log.Print("header: ", header)
+
+	req.PathParams = map[string]string{"id": p[2]}
 
 	handleFunc(&req)
 }

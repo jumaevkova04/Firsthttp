@@ -29,9 +29,6 @@ func execute(host string, port string) (err error) {
 		// id := req.PathParams["id"]
 		// log.Println(id)
 
-		header := req.Headers["header"]
-		log.Println(header)
-
 		_, err = req.Conn.Write([]byte(fmt.Sprintf(
 			"HTTP/1.1 200 OK\r\n" +
 				"Contetnt-Length: " + strconv.Itoa(len(body)) + "\r\n" +
