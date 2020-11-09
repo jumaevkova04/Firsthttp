@@ -16,6 +16,7 @@ type Request struct {
 	QueryParams url.Values
 	PathParams  map[string]string
 	Headers     map[string]string
+	Body        []byte
 }
 
 // HandleFunc ...
@@ -135,7 +136,6 @@ func (s *Server) handle(conn net.Conn) {
 
 	headersLine := string(data[requestLineEnd:headersLineEnd])
 	headers := strings.Split(headersLine, "\r\n")[1:]
-	// headers = headers[1:]
 	header := map[string]string{}
 	for _, h := range headers {
 		line := strings.Split(h, ": ")
@@ -146,6 +146,10 @@ func (s *Server) handle(conn net.Conn) {
 	log.Print("header: ", header)
 
 	// req.PathParams = map[string]string{"id": p[2]}
+
+	body := string(data[headersLineEnd:])
+	req.Body = []byte(body)
+	log.Print("body: ", body)
 
 	handleFunc(&req)
 }
