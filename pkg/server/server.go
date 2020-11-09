@@ -108,7 +108,7 @@ func (s *Server) handle(conn net.Conn) {
 	}
 	// log.Print(decoded)
 
-	p := strings.Split(decoded, "/")
+	// p := strings.Split(decoded, "/")
 
 	uri, err := url.ParseRequestURI(decoded)
 	if err != nil {
@@ -145,7 +145,7 @@ func (s *Server) handle(conn net.Conn) {
 
 	log.Print("header: ", header)
 
-	req.PathParams = map[string]string{"id": p[2]}
+	// req.PathParams = map[string]string{"id": p[2]}
 
 	handleFunc(&req)
 }
