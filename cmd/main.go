@@ -22,16 +22,15 @@ func main() {
 func execute(host string, port string) (err error) {
 	srv := server.NewServer(net.JoinHostPort(host, port))
 
-	srv.Register("/", func(req *server.Request) {
+	srv.Register("/payments/18", func(req *server.Request) {
 		body := "Payments"
 
-		id := req.QueryParams["id"]
-		// var a string
-		// for _, i := range id {
-		// 	a = i
-		// }
-		log.Println(id)
-		// log.Print(a)
+		// id := req.QueryParams["id"]
+		// id := req.PathParams["id"]
+		// log.Println(id)
+
+		header := req.Headers["header"]
+		log.Println(header)
 
 		_, err = req.Conn.Write([]byte(fmt.Sprintf(
 			"HTTP/1.1 200 OK\r\n" +

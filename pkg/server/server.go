@@ -14,10 +14,12 @@ import (
 type Request struct {
 	Conn        net.Conn
 	QueryParams url.Values
+	PathParams  map[string]string
+	Headers     map[string]string
 }
 
 // HandleFunc ...
-type HandleFunc func(conn *Request)
+type HandleFunc func(req *Request)
 
 // Server ...
 type Server struct {
@@ -36,6 +38,12 @@ func (s *Server) Register(path string, handler HandleFunc) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.handlers[path] = handler
+
+	// p := strings.Split(path, "/")
+	// // log.Print("first, p[2]: ", p[2])
+
+	// s.handlers["/"+p[1]+"/"+"18"] = handler
+	// log.Print("hahaha:  /" + p[1] + "/" + p[2])
 }
 
 // Start ...
@@ -91,7 +99,7 @@ func (s *Server) handle(conn net.Conn) {
 
 	path := parts[1]
 
-	// log.Print(path)
+	// log.Print("path: ", path)
 
 	decoded, err := url.PathUnescape(path)
 	if err != nil {
@@ -100,12 +108,14 @@ func (s *Server) handle(conn net.Conn) {
 	}
 	// log.Print(decoded)
 
+	// p := strings.Split(decoded, "/")
+
 	uri, err := url.ParseRequestURI(decoded)
 	if err != nil {
 		log.Print(err)
 		return
 	}
-	// log.Print(uri.Path)
+	// log.Print("uri.Path: ", uri.Path)
 	// log.Print(uri.Query())
 
 	var handleFunc = func(req *Request) {
@@ -119,6 +129,11 @@ func (s *Server) handle(conn net.Conn) {
 	var req Request
 	req.Conn = conn
 	req.QueryParams = uri.Query()
+
+	p := strings.Split(path, "/")
+	req.Headers = map[string]string{"header": p[1]}
+
+	// req.PathParams = map[string]string{"id": p[2]}
 
 	handleFunc(&req)
 }
