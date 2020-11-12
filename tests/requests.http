@@ -1,50 +1,11 @@
-# ###
-
-# GET http://localhost:9999/привет/ HTTP/1.1
-
-# ###
-
-# GET http://localhost:9999/привет/?q=какой-то текст HTTP/1.1
-
-# ###
-
-# GET http://localhost:9999/привет/?q=первий&q=второй HTTP/1.1
-
-
-# ###
-
-# GET http://localhost:9999/payments/1 HTTP/1.1
-# Accept: application/jsons
-# X-CustomHeader: custom header
-
-# ###
-
-# Post http://localhost:9999/payments/1 HTTP/1.1
-# Content-Type: application/json
-
-# {
-#     "id": 0,
-#     "amount": 1000,
-#     "recipient": "xxxxxx"
-# }
-
-# ###
-
-# GET http://localhost:9999/?id=1 HTTP/1.1
-# Accept: application/jsons
-# X-CustomHeader: custom header
-
-# ### 
-
-GET http://localhost:9999/?id=5 HTTP/1.1
+POST http://localhost:9999/banners.save HTTP/1.1
 
 ###
-Get http://localhost:9999/api/payments?param=9879
+POST http://localhost:9999/banners.getAll HTTP/1.1
 
-### 
+###
+POST http://localhost:9999/banners.getByID?id=0 HTTP/1.1
 
-GET http://localhost:9999/payments/18 HTTP/1.1
+###
+POST http://localhost:9999/banners.removeByID?id=0 HTTP/1.1
 
-### 
-
-GET http://localhost:9999/payments/{id} HTTP/1.1
